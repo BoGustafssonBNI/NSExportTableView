@@ -8,5 +8,5 @@
 import Cocoa
 
 open class NSExportTableColumn: NSTableColumn {
-    public var export : Bool?
+    open var export : Bool?
 }

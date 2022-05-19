@@ -8,23 +8,23 @@
 import Cocoa
 
 open class NSExportTableCellView: NSTableCellView {
-    public var textRepresentation : String? {
+    open var textRepresentation : String? {
         get
         {
             return textField?.cell?.title
         }
     }
-    public var backgroundColor : NSColor? {
+    open var backgroundColor : NSColor? {
         get {
             return textField?.backgroundColor
         }
     }
-    public var textColor : NSColor? {
+    open var textColor : NSColor? {
         get {
             return textField?.textColor
         }
     }
-    public var drawsBackground : Bool? {
+    open var drawsBackground : Bool? {
         get {
             return textField?.drawsBackground
         }
