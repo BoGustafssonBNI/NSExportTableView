@@ -7,7 +7,7 @@
 
 import Cocoa
 
-public class NSExportTableCellView: NSTableCellView {
+open class NSExportTableCellView: NSTableCellView {
     public var textRepresentation : String? {
         get
         {

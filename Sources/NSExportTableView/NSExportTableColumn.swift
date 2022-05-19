@@ -7,6 +7,6 @@
 
 import Cocoa
 
-public class NSExportTableColumn: NSTableColumn {
+open class NSExportTableColumn: NSTableColumn {
     public var export : Bool?
 }

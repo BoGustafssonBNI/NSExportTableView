@@ -1,6 +1,6 @@
 import Cocoa
 
-public class NSExportTableView: NSTableView {
+open class NSExportTableView: NSTableView {
 
     public var exportTableViewDelegate : NSExportTableViewDelegate?
     
