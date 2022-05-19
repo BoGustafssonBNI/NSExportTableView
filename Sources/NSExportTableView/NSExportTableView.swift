@@ -2,7 +2,7 @@ import Cocoa
 
 open class NSExportTableView: NSTableView {
 
-    public var exportTableViewDelegate : NSExportTableViewDelegate?
+    open var exportTableViewDelegate : NSExportTableViewDelegate?
     
     public func getCSV() -> String {
         let delimiter = ";"
