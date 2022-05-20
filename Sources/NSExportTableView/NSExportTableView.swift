@@ -50,8 +50,8 @@ open class NSExportTableView: NSTableView {
         return outString
     }
     
-    static let HeaderMaxChars = 7
-    static let EntryMaxChars = 14
+    open var headerMaxChars = 7
+    open var entryMaxChars = 14
     
     public func getLatex(shortTable: Bool, name: String) -> String {
         let delimiter = "&"
@@ -63,7 +63,7 @@ open class NSExportTableView: NSTableView {
             if let exporterColumn = column as? NSExportTableColumn, let export = exporterColumn.export, export {
                 ncols += 1
                 formatString += "l"
-//                header += column.identifier.rawValue.trunc(length: TableViewDataGetter.HeaderMaxChars, trailing: "") + delimiter
+//                header += column.identifier.rawValue.trunc(length: headerMaxChars, trailing: "") + delimiter
                 header += column.headerCell.title.components(separatedBy: "_").joined() + delimiter
             }
         }
@@ -124,24 +124,24 @@ open class NSExportTableView: NSTableView {
                                             let drawBackground = cell.drawsBackground
                                             let cellColoring = CellColoring(textColor: textColor, backgroundColor: background, drawBackground: drawBackground)
                                             let latexString = LatexUtils.toLatex(cellString)
-                                            outdata += cellColoring.latexColoredCellEntry(cellText: LatexUtils.trunc(latexString, length: NSExportTableView.EntryMaxChars)) + delimiter
+                                            outdata += cellColoring.latexColoredCellEntry(cellText: LatexUtils.trunc(latexString, length: entryMaxChars)) + delimiter
                                         } else {
                                             let latexString = LatexUtils.toLatex(cellString)
-                                            outdata += LatexUtils.trunc(latexString, length: NSExportTableView.EntryMaxChars) + delimiter
+                                            outdata += LatexUtils.trunc(latexString, length: entryMaxChars) + delimiter
                                         }
                                     } else {
                                         let latexString = LatexUtils.toLatex(cellString)
-                                        outdata += LatexUtils.trunc(latexString, length: NSExportTableView.EntryMaxChars) + delimiter
+                                        outdata += LatexUtils.trunc(latexString, length: entryMaxChars) + delimiter
                                     }
                                 } else if let cell = delegate?.tableView?(self, viewFor: column, row: row), let view = cell as? NSExportTableCellView, let cellString = view.textRepresentation {
                                     if let background = view.backgroundColor, let textColor = view.textColor {
                                         let drawBackground = view.drawsBackground ?? false
                                         let cellColoring = CellColoring(textColor: textColor, backgroundColor: background, drawBackground: drawBackground)
                                         let latexString = LatexUtils.toLatex(cellString)
-                                        outdata += cellColoring.latexColoredCellEntry(cellText: LatexUtils.trunc(latexString, length: NSExportTableView.EntryMaxChars)) + delimiter
+                                        outdata += cellColoring.latexColoredCellEntry(cellText: LatexUtils.trunc(latexString, length: entryMaxChars)) + delimiter
                                     } else {
                                         let latexString = LatexUtils.toLatex(cellString)
-                                        outdata += LatexUtils.trunc(latexString, length: NSExportTableView.EntryMaxChars) + delimiter
+                                        outdata += LatexUtils.trunc(latexString, length: entryMaxChars) + delimiter
                                     }
                                 } else {
                                     outdata += delimiter
