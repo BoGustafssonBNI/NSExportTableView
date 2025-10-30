@@ -5,7 +5,8 @@ open class NSExportTableView: NSTableView {
     open var exportTableViewDelegate : NSExportTableViewDelegate?
     
     public func getCSV(delimiter: String = ",") -> String {
-        var outString = ""
+        let BOM = "\u{FEFF}"
+        var outString = BOM
         if let rows = dataSource?.numberOfRows?(in: self) {
             for column in tableColumns {
                 if let exporterColumn = column as? NSExportTableColumn, let export = exporterColumn.export, export {
