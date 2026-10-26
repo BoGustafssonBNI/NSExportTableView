@@ -59,17 +59,19 @@ open class NSExportTableView: NSTableView {
         var ncols = 0
         var formatString = ""
         var header = ""
+        let latexName = LatexUtils.toLatex(name)
         for column in tableColumns {
             if let exporterColumn = column as? NSExportTableColumn, let export = exporterColumn.export, export {
                 ncols += 1
                 formatString += "l"
 //                header += column.identifier.rawValue.trunc(length: headerMaxChars, trailing: "") + delimiter
-                header += column.headerCell.title.components(separatedBy: "_").joined() + delimiter
+                let columnHeader = LatexUtils.toLatex(column.headerCell.title)
+                header += columnHeader + delimiter
             }
         }
         header.removeLast()
         if shortTable {
-            outdata = "\\begin{table}[h]\n \\caption{" + name + "} \n"
+            outdata = "\\begin{table}[h]\n \\caption{" + latexName + "} \n"
             outdata += "\\footnotesize \n"
             outdata += "\\begin{center}\n"
             outdata += "\\begin{tabular}{" + formatString + "}\n"
@@ -80,7 +82,7 @@ open class NSExportTableView: NSTableView {
             outdata = "\\begin{center}\n \\footnotesize \n"
             
             outdata += "\\begin{longtable}{" + formatString + "} \n"
-            outdata += "\\caption{" + name + "} \\label{" + name + "}\\\\ \n"
+            outdata += "\\caption{" + latexName + "} \\label{" + latexName + "}\\\\ \n"
             
             outdata += "\\hline\n"
             outdata += header + "\\\\ \n"
