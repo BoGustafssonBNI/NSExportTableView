@@ -73,11 +73,23 @@ struct LatexUtils {
         temp = temp.replacingOccurrences(of: "Ü", with: "{\\\"U}")
         return temp
     }
+    static func fixingUnderScore(_ string: String) -> String {
+        var temp = string
+        temp = temp.replacingOccurrences(of: "_", with: "\\_")
+        return temp
+    }
+    static func fixingPlusMinus(_ string: String) -> String {
+        var temp = string
+        temp = temp.replacingOccurrences(of: "+/-", with: "$\\pm$")
+        return temp
+    }
     static func toLatex(_ string: String) -> String {
         var temp = string
         temp = swedishToLatex(temp)
         temp = danishToLatex(temp)
         temp = germanToLatex(temp)
+        temp = fixingUnderScore(temp)
+        temp = fixingPlusMinus(temp)
         return temp
     }
 }
