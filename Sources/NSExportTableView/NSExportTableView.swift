@@ -81,7 +81,8 @@ open class NSExportTableView: NSTableView {
                 outdata += header + "\\\\ \n"
                 outdata += "\\midrule\n"
             } else {
-                outdata = "\\begin{landscape} \n"
+                outdata = "\\newgeometry{left=25mm,right=25mm,top=17mm,bottom=17mm} \n"
+                outdata += "\\begin{landscape} \n"
                 outdata += "\\begin{table}[p] \n"
                 outdata += "\\caption{\(latexName)} \n"
                 outdata += "\\footnotesize \n"
@@ -185,7 +186,7 @@ open class NSExportTableView: NSTableView {
                 outdata += "\\end{tabular}\n"
                 outdata += "\\end{table}\n"
                 outdata += "\\end{landscape}\n"
- //               outdata += "\\normalsize\n"
+                outdata += "\\restoregeometry\n"
             }
         } else {
             outdata += "\\normalsize\n"
