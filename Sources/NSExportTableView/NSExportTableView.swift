@@ -53,11 +53,11 @@ open class NSExportTableView: NSTableView {
     open var headerMaxChars = 7
     open var entryMaxChars = 14
     
-    public func getLatex(shortTable: Bool, name: String) -> String {
+    public func getLatex(shortTable: Bool = true, landscapeTable: Bool = false, name: String) -> String {
         let delimiter = "&"
         var outdata = String()
         var ncols = 0
-        var formatString = ""
+        var formatString = "@{}"
         var header = ""
         let latexName = LatexUtils.toLatex(name)
         for column in tableColumns {
@@ -69,15 +69,30 @@ open class NSExportTableView: NSTableView {
                 header += columnHeader + delimiter
             }
         }
+        formatString += "@{}"
         header.removeLast()
         if shortTable {
-            outdata = "\\begin{table}[h]\n \\caption{" + latexName + "} \n"
-            outdata += "\\footnotesize \n"
-            outdata += "\\begin{center}\n"
-            outdata += "\\begin{tabular}{" + formatString + "}\n"
-            outdata += "\\toprule\n"
-            outdata += header + "\\\\ \n"
-            outdata += "\\midrule\n"
+            if !landscapeTable {
+                outdata = "\\begin{table}[h]\n \\caption{" + latexName + "} \n"
+                outdata += "\\footnotesize \n"
+                outdata += "\\begin{center}\n"
+                outdata += "\\begin{tabular}{" + formatString + "}\n"
+                outdata += "\\toprule\n"
+                outdata += header + "\\\\ \n"
+                outdata += "\\midrule\n"
+            } else {
+                outdata = "\\begin{landscape} \n"
+                outdata += "\\begin{table}[p] \n"
+                outdata += "\\caption{\(latexName)} \n"
+                outdata += "\\footnotesize \n"
+                outdata += "\\centering \n"
+                outdata += "\\setlength{\\tabcolsep}{3pt} \n"
+                outdata += "\\renewcommand{\\arraystretch}{1.12} \n"
+                outdata += "\\begin{tabular}{\(formatString)} \n"
+                outdata += "\\toprule \n"
+                outdata += header + "\\\\ \n"
+                outdata += "\\midrule \n"
+            }
         } else {
             outdata = "\\begin{center}\n \\footnotesize \n"
             
@@ -159,11 +174,19 @@ open class NSExportTableView: NSTableView {
             }
         }
         if shortTable {
-            outdata += "\\bottomrule\n"
-            outdata += "\\end{tabular}\n"
-            outdata += "\\end{center}\n"
-            outdata += "\\normalsize\n"
-            outdata += "\\end{table}\n"
+            if !landscapeTable {
+                outdata += "\\bottomrule\n"
+                outdata += "\\end{tabular}\n"
+                outdata += "\\end{center}\n"
+                outdata += "\\normalsize\n"
+                outdata += "\\end{table}\n"
+            } else {
+                outdata += "\\bottomrule\n"
+                outdata += "\\end{tabular}\n"
+                outdata += "\\end{table}\n"
+                outdata += "\\end{landscape}\n"
+ //               outdata += "\\normalsize\n"
+            }
         } else {
             outdata += "\\normalsize\n"
             outdata += "\\end{longtable}\n"
