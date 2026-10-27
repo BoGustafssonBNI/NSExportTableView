@@ -63,7 +63,12 @@ open class NSExportTableView: NSTableView {
         for column in tableColumns {
             if let exporterColumn = column as? NSExportTableColumn, let export = exporterColumn.export, export {
                 ncols += 1
-                formatString += "l"
+                if ncols == 1 {
+                    formatString += "l"
+                } else {
+                    formatString += "r"
+
+                }
 //                header += column.identifier.rawValue.trunc(length: headerMaxChars, trailing: "") + delimiter
                 let columnHeader = LatexUtils.toLatex(column.headerCell.title)
                 header += columnHeader + delimiter
